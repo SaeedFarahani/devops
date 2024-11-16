@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  database:
+    container_name: pg_database
+    hostname: pg_database
+    image: postgres
+    volumes:
+      - ./volumes:/var/lib/postgresql
+    environment:
+      - POSTGRES_DB=pg_database
+      - POSTGRES_USER=pguser
+      - POSTGRES_PASSWORD=strongPassword
+    ports:
+      - 54321:5432
+    restart: unless-stopped
+  
+  nginx_webserver:
+    container_name: nginx_webserver
+    hostname: nginx_webserver
+    build:
+      context: ./
+      dockerfile: nginx
+    ports:
+      - 8080:80
+    restart: always

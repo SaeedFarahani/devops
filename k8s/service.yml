@@ -1,0 +1,44 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: webapp
+# spec:
+#   selector:
+#     app: webapp
+#   type: ClusterIP
+#   ports:
+#   - name: http
+#     port: 80
+#     targetPort: 80
+
+# ---
+# kind: Service
+# apiVersion: v1
+# metadata:
+#   name: nginx-np
+# spec:
+#   type: NodePort
+#   ports:
+#   - name: web
+#     port: 80
+#     nodePort: 30010
+#   selector:
+#     app: webapp
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlp
+    service.beta.kubernetes.io/aws-load-balancer-nlp-target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+spec:
+  selector:
+    app: webapp
+  type: LoadBalancer
+  ports: 
+  - protocol: TCP
+    port: 80
+    targetPort: 80

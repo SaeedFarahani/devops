@@ -1,0 +1,28 @@
+brew install minikube
+
+docker pull python
+docker build -t nginx -f nginx .
+docker run -p 8080:80 nginx
+docker run -p 8080:80 nginx printenv
+docker ps
+docker-compose up
+
+
+minikube start
+sudo minikube delete
+minikube service nginx-np --url
+
+kubectl api-resources | grep deployment
+
+
+kubectl apply -f k8s/deployment.yml
+kubectl apply -f k8s/pod.yml
+kubectl apply -f k8s/service.yml
+
+kubectl get pod 
+kubectl get pod webapp-fcd74fc8d-42l9p -oyaml
+
+kubectl get deployment
+kubectl get rs # replica set
+
+kubectl get svc -owide   
